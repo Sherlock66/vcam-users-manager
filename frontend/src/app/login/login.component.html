@@ -1,0 +1,53 @@
+<!--begin contact -->
+    <section class="section-white no-padding-bottom" id="contact">
+        
+        <!--begin container-->
+        <div class="container">
+    
+            <!--begin row-->
+            <div class="row">
+        
+                <!--begin col-md-6 -->
+				<div class="col-md-6">
+
+					<h4>CONNEXION</h4>
+
+	                <!--begin success message -->
+	                <p class="contact_success_box" style="display:none;">Thank You!</p>
+	                <!--end success message -->
+	                
+	                <!--begin contact form -->
+	                <form id="contact-form" class="contact" (ngSubmit)="onSubmit(loginForm.value)" method="post" [formGroup]="loginForm">
+						<div class="alert alert-danger" role="alert" *ngIf="hasError">
+							<strong>Erreur!</strong> {{message}}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span (click)="closeAlert()" aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="alert alert-success" role="alert" *ngIf="isSuccess">
+							<strong>Success!</strong> {{message}}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+                        <input class="contact-input white-input" formControlName="email" required="" placeholder="Email" type="email">
+
+                        <input class="contact-input white-input" formControlName="password" required="" placeholder="Password" type="password">    
+
+						<button id="submit-button" class="contact-submit" type="submit" [disabled]="isProcesing">
+							Login
+							<img *ngIf="isProcesing" src="../assets/images/loading.gif" with="15px" height="15px" class="width-1" alt="pic">
+						</button>
+	                </form>
+	                <!--end contact form -->
+	            	
+				</div>
+				<!--end col-md-6 -->
+            </div>
+            <!--end row-->
+            
+      </div>
+      <!--end container-->
+            
+    </section>
+    <!--end contact-->
