@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,11 @@ export class LoginComponent implements OnInit {
   hasError: boolean = false;
   isSuccess: boolean = false;
   message : string;
-
+ 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: '',
@@ -39,7 +43,22 @@ export class LoginComponent implements OnInit {
       console.log("formulaire mal rempli");
       return ;
     }
-    
+
+    this.authService.login(loginData.email, loginData.password)
+      .then(response => {
+        console.log(response);
+        this.isSuccess = true;
+        this.authService.saveToken({
+          'access_token' : response.accessToken,
+          'token_type': response.token_type,
+          'expires_at': response.expires_at
+        });
+        this.authService.saveUser(response.user);
+        this.router.navigateByUrl('/home');
+        
+    }).catch(error => {
+      console.log(error);
+    });
     console.warn('Your order has been submitted', loginData);
   }
 
